@@ -171,6 +171,7 @@ import apiService from '@/components/apiService';
 import Navbar from '@/components/Navbar';
 import { useRouter } from 'next/navigation';
 import toast from "react-hot-toast";
+import withAuth from "../../hoc/withAuth.js";
 
 const TeamChoose = () => {
 
@@ -317,4 +318,4 @@ const TeamChoose = () => {
     );
 };
 
-export default TeamChoose;
+export default withAuth(TeamChoose);
