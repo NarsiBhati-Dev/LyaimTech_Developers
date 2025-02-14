@@ -4,10 +4,12 @@ import { FaChevronDown } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useUser } from "@/context/AuthContext";
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { user, loading, logout } = useUser();
+    const router = useRouter();
 
     const handleLogout = async () => {
         await logout;
