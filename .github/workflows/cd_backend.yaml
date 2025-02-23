@@ -2,10 +2,7 @@ name: LyaimTech backend
 
 on: 
     push: 
-        branches:  [ main ]
-        paths: 
-          - 'backend/**' 
-          - '.github/workflows/cd_backend.yaml'
+        branches: [ main ]
 
 jobs: 
     build: 
@@ -27,20 +24,16 @@ jobs:
                 file: ./backend/Dockerfile
                 push: true
                 tags: |
-                  narsibhati6545/lyaim-tech-backend:${{github.sha}} 
+                  narsibhati6545/lyaim-tech-backend:${{ github.sha }} 
                   narsibhati6545/lyaim-tech-backend:latest
             
             - name: Deploy to VM
               run: |
-                  echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
-                  chmod 600 ~/ssh_key
-                  ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@18.206.107.28 -t "
-                    docker pull narsibhati6545/lyaim-tech-backend:latest &&
-                    docker stop lyaim-backend || true &&
-                    docker rm lyaim-backend || true &&
-                    docker run -d --name lyaim-backend -p 9000:9000 narsibhati6545/lyaim-tech-backend:latest"
-
-
-
-                 
-
+                 echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
+                 chmod 600 ~/ssh_key
+                 ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@18.206.107.28 <<EOF
+                    docker pull narsibhati6545/lyaim-tech-backend:latest
+                    docker stop lyaim-backend || true
+                    docker rm lyaim-backend || true
+                    docker run -d --name lyaim-backend -p 9000:9000 --restart always narsibhati6545/lyaim-tech-backend:latest
+                 EOF
