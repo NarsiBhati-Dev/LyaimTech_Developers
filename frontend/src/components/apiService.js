@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// Production baseURL
-// baseURL: https://api.lyaim.com
-
 const API = axios.create({
   baseURL: process.env.BASE_URL || "http://localhost:9000",
   withCredentials: true,
