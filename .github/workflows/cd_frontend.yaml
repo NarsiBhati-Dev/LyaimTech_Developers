@@ -32,7 +32,7 @@ jobs:
               with:
                 host: ${{ secrets.HOST }} # Your VM IP
                 username: "ubuntu" # Your SSH user
-                password: ${{ secrets.SSH_PRIVATE_KEY }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
                 script: whoami
 
