@@ -28,13 +28,16 @@ jobs:
                   narsibhati6545/lyaim-tech-frontend:latest
 
             - name: Deploy to VM
-              uses: appleboy/ssh-action@v0.1.10
+              uses: appleboy/ssh-action@v1.2.0
               with:
-                host: "18.206.107.28" # Your VM IP
+                host: ${{ secrets.HOST }} # Your VM IP
                 username: "ubuntu" # Your SSH user
-                key: ${{ secrets.SSH_PRIVATE_KEY }}
-                script: |
-                  docker pull narsibhati6545/lyaim-tech-frontend:latest
-                  docker stop lyaim-frontend || true
-                  docker rm lyaim-frontend || true
-                  docker run -d --name lyaim-frontend -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
+                password: ${{ secrets.SSH_PRIVATE_KEY }}
+                port: 22
+                script: whoami
+
+
+                  # docker pull narsibhati6545/lyaim-tech-frontend:latest
+                  # docker stop lyaim-frontend || true
+                  # docker rm lyaim-frontend || true
+                  # docker run -d --name lyaim-frontend -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
