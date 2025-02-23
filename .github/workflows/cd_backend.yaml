@@ -38,4 +38,13 @@ jobs:
                   sudo docker pull narsibhati6545/lyaim-tech-backend:latest
                   sudo docker stop lyaim-backend || true
                   sudo docker rm lyaim-backend || true
-                  sudo docker run -d --name lyaim-backend -p 9000:9000 --restart always narsibhati6545/lyaim-tech-backend:latest
+                  sudo docker run -d \
+                    -e PORT=9000 \
+                    -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+                    -e NODE_ENV=development \
+                    -e PAYPAL_MODE=${{secrets.PAYPAL_MODE}} \
+                    -e PAYPAL_CLIENT_ID=${{ secrets.PAYPAL_CLIENT_ID }} \
+                    -e PAYPAL_CLIENT_SECRET=${{ secrets.PAYPAL_CLIENT_SECRET }} \
+                    -e MONGO_URL= ${{ secrets.MONGO_URL }} \
+                    -p 9000:9000 \
+                    backend
