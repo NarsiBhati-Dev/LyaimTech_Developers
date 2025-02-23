@@ -34,8 +34,8 @@ jobs:
                 username: "ubuntu" # Your SSH user
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
-                script: 
-                  docker pull narsibhati6545/lyaim-tech-backend:latest
-                  docker stop lyaim-backend || true
-                  docker rm lyaim-backend || true
-                  docker run -d --name lyaim-backend -p 9000:9000 --restart always narsibhati6545/lyaim-tech-backend:latest
+                script: |
+                  docker pull narsibhati6545/lyaim-tech-frontend:latest
+                  docker stop lyaim-frontend || true
+                  docker rm lyaim-frontend || true
+                  docker run -d --name lyaim-frontend -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
