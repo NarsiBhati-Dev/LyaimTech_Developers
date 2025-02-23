@@ -23,6 +23,6 @@ jobs:
                 context: ./backend
                 file: ./backend/Dockerfile
                 push: true
-                tags: NarsiBhati6545/lyaim-tech:${{github.sha}} 
+                tags: narsibhati6545/lyaim-tech:${{github.sha}} 
                  
 
