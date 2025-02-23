@@ -30,12 +30,12 @@ jobs:
             - name: Deploy to VM
               uses: appleboy/ssh-action@v1.2.0
               with:
-                host: "98.81.206.98" # Your VM IP
-                username: "ubuntu" # Your SSH user
+                host: "98.81.206.98" 
+                username: "ubuntu" 
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
                 script: |
                   sudo docker pull narsibhati6545/lyaim-tech-backend:latest
                   sudo docker stop lyaim-backend || true
                   sudo docker rm lyaim-backend || true
-                  sudo docker run -d --name lyaim-backend -p 3000:3000 --restart always narsibhati6545/lyaim-tech-backend:latest
+                  sudo docker run -d --name lyaim-backend -p 9000:9000 --restart always narsibhati6545/lyaim-tech-backend:latest
