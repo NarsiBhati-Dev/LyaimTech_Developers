@@ -32,8 +32,8 @@ jobs:
                 echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/ssh_key
                 chmod 600 ~/ssh_key
                 ssh -o StrictHostKeyChecking=no -i ~/ssh_key ubuntu@18.206.107.28 <<EOF
-                  docker pull narsibhati6545/lyaim-tech-frontend:latest
-                  docker stop lyaim-frontend || true
-                  docker rm lyaim-frontend || true
-                  docker run -d --name lyaim-frontend -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
+                  docker pull narsibhati6545/lyaim-tech-backend:latest
+                  docker stop lyaim-backend || true
+                  docker rm lyaim-backend || true
+                  docker run -d --name lyaim-backend -p 9000:9000 --restart always narsibhati6545/lyaim-tech-backend:latest
                 EOF
