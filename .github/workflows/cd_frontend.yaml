@@ -34,7 +34,9 @@ jobs:
                 username: "ubuntu" # Your SSH user
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
-                script: whoami
+                script: 
+                  whoami
+                  ls
 
 
                   # docker pull narsibhati6545/lyaim-tech-frontend:latest
