@@ -35,6 +35,7 @@ jobs:
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
                 script: |
+                  sudo su
                   docker pull narsibhati6545/lyaim-tech-frontend:latest
                   docker stop lyaim-frontend || true
                   docker rm lyaim-frontend || true
