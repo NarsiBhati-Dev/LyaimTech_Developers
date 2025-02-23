@@ -1,37 +1,37 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import apiService from '@/components/apiService';
-import toast from 'react-hot-toast';
-import withAdminAuth from '@/hoc/withAdminAuth.js';
+import { useState } from "react";
+import apiService from "@/components/apiService";
+import toast from "react-hot-toast";
+import withAdminAuth from "@/hoc/withAdminAuth.js";
 // import LoadingPage from '@/components/LoadingPage';  // for custom loading page
 
 const AdminPage = () => {
   const [matches, setMatches] = useState([]);
   const [teams, setTeams] = useState([]);
   const [contests, setContests] = useState([]);
-  
+
   const [newMatch, setNewMatch] = useState({
-    home_team: '',
-    away_team: '',
-    match_date: '',
-    status: 'Upcoming',
+    home_team: "",
+    away_team: "",
+    match_date: "",
+    status: "Upcoming",
   });
-  
+
   const [newTeam, setNewTeam] = useState({
-    matchId: '',
-    homeTeam: '',
-    awayTeam: '',
-    homeTeamPlayers: '',
-    awayTeamPlayers: '',
+    matchId: "",
+    homeTeam: "",
+    awayTeam: "",
+    homeTeamPlayers: "",
+    awayTeamPlayers: "",
   });
-  
+
   const [newContest, setNewContest] = useState({
-    name: '',
-    entryFee: '',
-    maxPlayers: '',
-    prizePool: '',
-    matchId: '',
+    name: "",
+    entryFee: "",
+    maxPlayers: "",
+    prizePool: "",
+    matchId: "",
   });
 
   // const [loading, setLoading] = useState(true);  // Manage loading state
@@ -49,7 +49,7 @@ const AdminPage = () => {
   //     setMatches(matchesData || []);
   //     setTeams(teamsData || []);
   //     setContests(contestsData || []);
-      
+
   //     setLoading(false);  // Data fetched, hide loading page
   //   } catch (error) {
   //     toast.error('Error fetching data');
@@ -60,13 +60,18 @@ const AdminPage = () => {
 
   const handleCreateMatch = async () => {
     try {
-      const response = await apiService.postData('/admin/match', newMatch); // API POST request
+      const response = await apiService.postData("/admin/match", newMatch); // API POST request
       setMatches([...matches, response.data]);
-      toast.success('Match added successfully!');
-      setNewMatch({ home_team: '', away_team: '', match_date: '', status: 'Upcoming' });
+      toast.success("Match added successfully!");
+      setNewMatch({
+        home_team: "",
+        away_team: "",
+        match_date: "",
+        status: "Upcoming",
+      });
     } catch (error) {
-      toast.error('Error adding match');
-      console.error('Error:', error);
+      toast.error("Error adding match");
+      // console.error('Error:', error);
     }
   };
 
@@ -76,35 +81,42 @@ const AdminPage = () => {
         matchId: newTeam.matchId,
         homeTeam: newTeam.homeTeam,
         awayTeam: newTeam.awayTeam,
-        homeTeamPlayers: newTeam.homeTeamPlayers.split(', '),
-        awayTeamPlayers: newTeam.awayTeamPlayers.split(', ')
-      }
+        homeTeamPlayers: newTeam.homeTeamPlayers.split(", "),
+        awayTeamPlayers: newTeam.awayTeamPlayers.split(", "),
+      };
       // console.log('newTeam', payload);
-      const response = await apiService.postData('/admin/team', payload); // API POST request
+      const response = await apiService.postData("/admin/team", payload); // API POST request
       setTeams([...teams, response.data]);
-      toast.success('Team added successfully!');
+      toast.success("Team added successfully!");
       setNewTeam({
-        matchId: '',
-        homeTeam: '',
-        awayTeam: '',
-        homeTeamPlayers: '',
-        awayTeamPlayers: '',
+        matchId: "",
+        homeTeam: "",
+        awayTeam: "",
+        homeTeamPlayers: "",
+        awayTeamPlayers: "",
       });
     } catch (error) {
-      toast.error('Error adding team');
-      console.error('Error:', error);
+      toast.error("Error adding team");
+      console.error("Error:", error);
     }
   };
 
   const handleCreateContest = async () => {
-    try {console.log(newContest);
-      const response = await apiService.postData('/admin/contest', newContest); // API POST request
+    try {
+      console.log(newContest);
+      const response = await apiService.postData("/admin/contest", newContest); // API POST request
       setContests([...contests, response.data]);
-      toast.success('Contest added successfully!');
-      setNewContest({ name: '', entryFee: 0, maxPlayers: 0, prizePool: 0, matchId: '' });
+      toast.success("Contest added successfully!");
+      setNewContest({
+        name: "",
+        entryFee: 0,
+        maxPlayers: 0,
+        prizePool: 0,
+        matchId: "",
+      });
     } catch (error) {
-      toast.error('Error adding contest');
-      console.error('Error:', error);
+      toast.error("Error adding contest");
+      console.error("Error:", error);
     }
   };
 
@@ -125,9 +137,9 @@ const AdminPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-4">Admin Dashboard</h1>
-      
+
       {/* Match Section */}
-      <Section 
+      <Section
         title="Matches"
         data={matches}
         renderForm={
@@ -138,25 +150,33 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Home Team"
               value={newMatch.home_team}
-              onChange={(e) => setNewMatch({ ...newMatch, home_team: e.target.value })}
+              onChange={(e) =>
+                setNewMatch({ ...newMatch, home_team: e.target.value })
+              }
             />
             <input
               type="text"
               className="border p-2 mb-2 w-full"
               placeholder="Away Team"
               value={newMatch.away_team}
-              onChange={(e) => setNewMatch({ ...newMatch, away_team: e.target.value })}
+              onChange={(e) =>
+                setNewMatch({ ...newMatch, away_team: e.target.value })
+              }
             />
             <input
               type="date"
               className="border p-2 mb-2 w-full"
               value={newMatch.match_date}
-              onChange={(e) => setNewMatch({ ...newMatch, match_date: e.target.value })}
+              onChange={(e) =>
+                setNewMatch({ ...newMatch, match_date: e.target.value })
+              }
             />
             <select
               className="border p-2 mb-2 w-full"
               value={newMatch.status}
-              onChange={(e) => setNewMatch({ ...newMatch, status: e.target.value })}
+              onChange={(e) =>
+                setNewMatch({ ...newMatch, status: e.target.value })
+              }
             >
               <option value="Upcoming">Upcoming</option>
               <option value="Live">Live</option>
@@ -171,7 +191,7 @@ const AdminPage = () => {
           </div>
         }
       />
-      
+
       {/* Team Section */}
       <Section
         title="Teams"
@@ -191,20 +211,26 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Match ID"
               value={newTeam.matchId}
-              onChange={(e) => setNewTeam({ ...newTeam, matchId: e.target.value })}
+              onChange={(e) =>
+                setNewTeam({ ...newTeam, matchId: e.target.value })
+              }
             />
             <input
               type="text"
               className="border p-2 mb-2 w-full"
               placeholder="Home Team"
               value={newTeam.homeTeam}
-              onChange={(e) => setNewTeam({ ...newTeam, homeTeam: e.target.value })}
+              onChange={(e) =>
+                setNewTeam({ ...newTeam, homeTeam: e.target.value })
+              }
             />
             <textarea
               className="border p-2 mb-2 w-full"
               placeholder="Enter Home Team Players (space separated)"
-              value={newTeam.homeTeamPlayers}  // Join players with commas for display
-              onChange={(e) => setNewTeam({ ...newTeam, homeTeamPlayers: e.target.value })}  // Handle add players
+              value={newTeam.homeTeamPlayers} // Join players with commas for display
+              onChange={(e) =>
+                setNewTeam({ ...newTeam, homeTeamPlayers: e.target.value })
+              } // Handle add players
               // onChange={(e) => handleAddPlayer('homeTeamPlayers', e.target.value)}  // Handle add players
             />
             <input
@@ -212,13 +238,17 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Away Team"
               value={newTeam.awayTeam}
-              onChange={(e) => setNewTeam({ ...newTeam, awayTeam: e.target.value })}
+              onChange={(e) =>
+                setNewTeam({ ...newTeam, awayTeam: e.target.value })
+              }
             />
             <textarea
               className="border p-2 mb-2 w-full"
               placeholder="Enter Away Team Players (space separated)"
-              value={newTeam.awayTeamPlayers}  // Join substitutes with commas for display
-              onChange={(e) => setNewTeam({ ...newTeam, awayTeamPlayers: e.target.value })}  // Handle add substitutes
+              value={newTeam.awayTeamPlayers} // Join substitutes with commas for display
+              onChange={(e) =>
+                setNewTeam({ ...newTeam, awayTeamPlayers: e.target.value })
+              } // Handle add substitutes
             />
             <button
               onClick={handleCreateTeam}
@@ -229,7 +259,7 @@ const AdminPage = () => {
           </div>
         }
       />
-      
+
       {/* Contest Section */}
       <Section
         title="Contests"
@@ -242,7 +272,9 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Contest Name"
               value={newContest.name}
-              onChange={(e) => setNewContest({ ...newContest, name: e.target.value })}
+              onChange={(e) =>
+                setNewContest({ ...newContest, name: e.target.value })
+              }
             />
             <input
               type="number"
@@ -250,7 +282,9 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Entry Fee"
               value={newContest.entryFee}
-              onChange={(e) => setNewContest({ ...newContest, entryFee: e.target.value })}
+              onChange={(e) =>
+                setNewContest({ ...newContest, entryFee: e.target.value })
+              }
             />
             <input
               type="number"
@@ -258,7 +292,9 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Max Players"
               value={newContest.maxPlayers}
-              onChange={(e) => setNewContest({ ...newContest, maxPlayers: e.target.value })}
+              onChange={(e) =>
+                setNewContest({ ...newContest, maxPlayers: e.target.value })
+              }
             />
             <input
               type="number"
@@ -266,14 +302,18 @@ const AdminPage = () => {
               className="border p-2 mb-2 w-full"
               placeholder="Prize Pool"
               value={newContest.prizePool}
-              onChange={(e) => setNewContest({ ...newContest, prizePool: e.target.value })}
+              onChange={(e) =>
+                setNewContest({ ...newContest, prizePool: e.target.value })
+              }
             />
             <input
               type="text"
               className="border p-2 mb-2 w-full"
               placeholder="Match ID"
               value={newContest.matchId}
-              onChange={(e) => setNewContest({ ...newContest, matchId: e.target.value })}
+              onChange={(e) =>
+                setNewContest({ ...newContest, matchId: e.target.value })
+              }
             />
             <button
               onClick={handleCreateContest}
@@ -286,7 +326,7 @@ const AdminPage = () => {
       />
     </div>
   );
-}
+};
 
 function Section({ title, data, renderForm }) {
   return (
