@@ -38,7 +38,7 @@ jobs:
                   sudo docker pull narsibhati6545/lyaim-tech-frontend:latest
                   if 
                     sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-frontend$"; 
-                    then
+                  then
                       sudo docker stop lyaim-frontend
                       sudo docker rm lyaim-frontend
                   fi
