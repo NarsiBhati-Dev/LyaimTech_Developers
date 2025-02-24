@@ -30,7 +30,7 @@ jobs:
             - name: Deploy to VM
               uses: appleboy/ssh-action@v1.2.0
               with:
-                host: "98.81.206.98"
+                host: "3.89.35.211"
                 username: "ubuntu" # Your SSH user
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
@@ -38,4 +38,5 @@ jobs:
                   sudo docker pull narsibhati6545/lyaim-tech-frontend:latest
                   sudo docker stop lyaim-frontend || true
                   sudo docker rm lyaim-frontend || true
-                  sudo docker run -d --name lyaim-frontend -e BASE_URL=${{secrets.BASE_URL}} -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
+                  sudo docker run -d --name lyaim-frontend -e BASE_URL=${{ secrets.BASE_URL }} -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
+                  sudo docker image prune -f || true

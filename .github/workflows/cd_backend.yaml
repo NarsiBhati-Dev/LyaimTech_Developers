@@ -30,7 +30,7 @@ jobs:
             - name: Deploy to VM
               uses: appleboy/ssh-action@v1.2.0
               with:
-                host: "98.81.206.98" 
+                host: "3.89.35.211" 
                 username: "ubuntu" 
                 key: ${{ secrets.SSH_PRIVATE_KEY }}
                 port: 22
@@ -38,7 +38,7 @@ jobs:
                   sudo docker pull narsibhati6545/lyaim-tech-backend:latest
                   sudo docker stop lyaim-backend || true
                   sudo docker rm lyaim-backend || true
-                   sudo docker run -d \
+                  sudo docker run -d \
                     --name lyaim-backend \
                     -e PORT=9000 \
                     -e JWT_SECRET="${JWT_SECRET}" \
@@ -50,6 +50,7 @@ jobs:
                     -p 9000:9000 \
                     --restart always \
                     narsibhati6545/lyaim-tech-backend:latest
+                  sudo docker image prune -f || true
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
