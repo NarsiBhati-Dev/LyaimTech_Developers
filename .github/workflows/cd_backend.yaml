@@ -50,7 +50,7 @@ jobs:
                     -p 9000:9000 \
                     --restart always \
                     narsibhati6545/lyaim-tech-backend:latest
-                  sudo docker image prune -f || true
+                  sudo  docker rmi $(docker images -aq)  
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
