@@ -36,8 +36,12 @@ jobs:
                 port: 22
                 script: |
                   sudo docker pull narsibhati6545/lyaim-tech-backend:latest
-                  sudo docker stop lyaim-backend || true
-                  sudo docker rm lyaim-backend || true
+                  if 
+                    sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-backend$"; 
+                    then
+                      sudo docker stop lyaim-backend
+                      sudo docker rm lyaim-backend
+                  fi
                   sudo docker run -d \
                     --name lyaim-backend \
                     -e PORT=9000 \
@@ -50,7 +54,7 @@ jobs:
                     -p 9000:9000 \
                     --restart always \
                     narsibhati6545/lyaim-tech-backend:latest
-                  sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "narsibhati6545/lyaim-tech-backend" | grep -v "latest" | xargs -r sudo docker rmi -f
+                  sudo docker image prune -f
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}

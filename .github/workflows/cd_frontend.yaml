@@ -36,7 +36,11 @@ jobs:
                 port: 22
                 script: |
                   sudo docker pull narsibhati6545/lyaim-tech-frontend:latest
-                  sudo docker stop lyaim-frontend || true
-                  sudo docker rm lyaim-frontend || true
+                  if 
+                    sudo docker ps -a --format '{{.Names}}' | grep -q "^lyaim-frontend$"; 
+                    then
+                      sudo docker stop lyaim-frontend
+                      sudo docker rm lyaim-frontend
+                  fi
                   sudo docker run -d --name lyaim-frontend -e BASE_URL=${{ secrets.BASE_URL }} -p 3000:3000 --restart always narsibhati6545/lyaim-tech-frontend:latest
-                  sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "narsibhati6545/lyaim-tech-frontend" | grep -v "latest" | xargs -r sudo docker rmi -f
+                  sudo docker image prune -f
