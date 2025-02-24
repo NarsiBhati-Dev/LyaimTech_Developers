@@ -50,7 +50,7 @@ jobs:
                     -p 9000:9000 \
                     --restart always \
                     narsibhati6545/lyaim-tech-backend:latest
-                  sudo  docker rmi $(docker images -aq)  || true
+                  sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "narsibhati6545/lyaim-tech-backend" | grep -v "latest" | xargs -r sudo docker rmi -f
               env:
                 JWT_SECRET: ${{ secrets.JWT_SECRET }}
                 PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
